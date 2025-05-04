@@ -27,8 +27,11 @@ class FlutterTapPaySdkWeb extends MethodChannelFlutterTapPaySdk {
 
   @override
   Future<String> getPrime() async {
-    final prime = await TPDirect.card.getPrime(); // 舉例
-    return prime!.prime; // 用 ! 保證它不為 null（如果你已驗證安全）
+    final prime = await FlutterTappaySdkWebImpl().getPrime();
+    if (prime == null) {
+      throw Exception('getPrime failed: prime is null');
+    }
+    return prime;
   }
 
   @override
