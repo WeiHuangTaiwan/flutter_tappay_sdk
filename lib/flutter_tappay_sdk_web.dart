@@ -3,9 +3,9 @@ import 'flutter_tappay_sdk_platform_interface.dart';
 import 'src/flutter_tappay_sdk_web_impl.dart';
 
 /// A web implementation of the FlutterTappaySdkPlatform.
-class FlutterTappaySdkWeb extends FlutterTappaySdkPlatform {
+class FlutterTapPaySdkWeb extends FlutterTapPaySdkPlatform {
   static void registerWith(Registrar registrar) {
-    FlutterTappaySdkPlatform.instance = FlutterTappaySdkWeb();
+    FlutterTapPaySdkPlatform.instance = FlutterTapPaySdkWeb();
   }
 
   @override
