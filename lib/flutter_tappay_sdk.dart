@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart'; // 用來判斷 kIsWeb
 import 'package:flutter_tappay_sdk/models/tappay_prime.dart';
 
 import 'flutter_tappay_sdk_platform_interface.dart';
@@ -6,6 +7,7 @@ import 'models/tappay_sdk_common_result.dart';
 import 'tappay/auth_methods.dart';
 import 'tappay/card_type.dart';
 import 'tappay/cart_item.dart';
+
 
 class FlutterTapPaySdk {
   /// To get the native SDK version
@@ -245,5 +247,54 @@ class FlutterTapPaySdk {
   /// Call TPDirect.getDeviceId() in Web
   static Future<String> getWebDeviceId() {
     return FlutterTapPaySdkPlatform.instance.getDeviceId();
+  }
+    /// Unified Prime 取得入口，Web / Native 一次搞定
+  ///
+  /// - Web: 只需要 appId/appKey/serverType
+  /// - Native: 需要 appId/appKey/isSandbox + 卡號資訊
+  /// 回傳 String prime，如果發生錯誤則丟 Exception
+  static Future<String> getUniversalPrime({
+    required int appId,
+    required String appKey,
+    bool isSandbox = false,
+    // 以下三個參數 native 必填，web 可以不傳
+    String? cardNumber,
+    String? dueMonth,
+    String? dueYear,
+    String? cvv,
+  }) async {
+    if (kIsWeb) {
+      // Web 流程
+      await setupWebSDK(
+        appId: appId,
+        appKey: appKey,
+        serverType: isSandbox ? 'sandbox' : 'production',
+      );
+      return await getWebPrime();
+    } else {
+      // Native 流程
+      final initRes = await initTapPay(
+        appId: appId,
+        appKey: appKey,
+        isSandbox: isSandbox,
+      );
+      if (initRes?.success != true) {
+        throw Exception('TapPay init failed: ${initRes?.message}');
+      }
+      // 確保卡號資訊都有傳入
+      if ([cardNumber, dueMonth, dueYear, cvv].any((e) => e == null || e.isEmpty)) {
+        throw Exception('Missing card info for native platform');
+      }
+      final primeRes = await getCardPrime(
+        cardNumber: cardNumber!,
+        dueMonth: dueMonth!,
+        dueYear: dueYear!,
+        cvv: cvv!,
+      );
+      if (primeRes?.success != true) {
+        throw Exception('getCardPrime failed: ${primeRes?.message}');
+      }
+      return primeRes!.prime;
+    }
   }
 }
