@@ -25,3 +25,6 @@ flutter:
         pluginClass: FlutterTapPaySdkPlugin
       ios:
         pluginClass: FlutterTapPaySdkPlugin
+      web:
+        pluginClass: FlutterTappaySdkWeb
+        fileName: flutter_tappay_sdk_web.dart
