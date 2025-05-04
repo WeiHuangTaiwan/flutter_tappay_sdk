@@ -1,7 +1,7 @@
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 import 'flutter_tappay_sdk_platform_interface.dart';
-import 'flutter_tappay_sdk_method_channel.dart';        // 新增
+import 'flutter_tappay_sdk_method_channel.dart';
 import 'src/flutter_tappay_sdk_web_impl.dart';
 
 /// A web implementation of the FlutterTapPay SDK.
@@ -28,8 +28,8 @@ class FlutterTapPaySdkWeb extends MethodChannelFlutterTapPaySdk {
   @override
   Future<String> getPrime() async {
     final prime = await FlutterTappaySdkWebImpl().getPrime();
-    if (prime == null) {
-      throw Exception('getPrime failed: prime is null');
+    if (prime == null || prime.isEmpty) {
+      throw Exception('getPrime failed: Received null or empty prime');
     }
     return prime;
   }
