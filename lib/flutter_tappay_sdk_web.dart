@@ -26,7 +26,7 @@ class FlutterTapPaySdkWeb extends MethodChannelFlutterTapPaySdk {
   }
 
   @override
-  Future<String> getPrime() {
+  Future<String?> getPrime() {
     return FlutterTappaySdkWebImpl().getPrime();
   }
 
