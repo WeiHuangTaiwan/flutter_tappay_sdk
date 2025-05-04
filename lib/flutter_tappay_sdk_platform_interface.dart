@@ -181,4 +181,30 @@ abstract class FlutterTapPaySdkPlatform extends PlatformInterface {
   /// return [TapPaySdkCommonResult] with value [message] as [String] if fail.
   ///
   Future<TapPaySdkCommonResult?> applePayResult({required bool result});
+    /// (Web Only) Setup TapPay SDK in browser
+  ///
+  /// Call TPDirect.setupSDK(...)
+  ///
+  /// Only works when running in browser, will throw if unsupported platform.
+  Future<void> setupSDK({
+    required int appId,
+    required String appKey,
+    required String serverType,
+  }) {
+    throw UnimplementedError('setupSDK() has not been implemented.');
+  }
+
+  /// (Web Only) Get TapPay device ID from browser
+  ///
+  /// Only works on web. Used in RBA (risk-based authentication).
+  Future<String> getDeviceId() {
+    throw UnimplementedError('getDeviceId() has not been implemented.');
+  }
+
+  /// (Web Only) Call TPDirect.card.getPrime()
+  ///
+  /// Must be called after TapPay fields are rendered and valid.
+  Future<String> getPrime() {
+    throw UnimplementedError('getPrime() has not been implemented.');
+  }
 }
