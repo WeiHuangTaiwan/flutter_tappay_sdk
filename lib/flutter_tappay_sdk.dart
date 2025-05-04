@@ -240,7 +240,7 @@ class FlutterTapPaySdk {
   }
 
   /// Call TPDirect.card.getPrime() in Web
-  static Future<String> getWebPrime() {
+  static Future<String?> getWebPrime() {
     return FlutterTapPaySdkPlatform.instance.getPrime();
   }
 
