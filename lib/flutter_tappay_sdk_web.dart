@@ -32,7 +32,7 @@ class FlutterTapPaySdkWeb extends MethodChannelFlutterTapPaySdk {
       throw Exception('getPrime failed: Received null or empty prime');
     }
     return prime;
-  }
+}
 
   @override
   Future<String> getDeviceId() {
