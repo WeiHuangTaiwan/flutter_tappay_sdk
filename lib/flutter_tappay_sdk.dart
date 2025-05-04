@@ -298,7 +298,11 @@ class FlutterTapPaySdk {
       if (primeRes?.success != true) {
         throw Exception('getCardPrime failed: ${primeRes?.message}');
       }
-      return primeRes!.prime;
+      final prime = primeRes?.prime;
+if (prime == null || prime.isEmpty) {
+  throw Exception('getCardPrime failed: prime is null');
+}
+return prime;
     }
   }
 }
