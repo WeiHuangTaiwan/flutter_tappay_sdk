@@ -273,7 +273,7 @@ class FlutterTapPaySdk {
       return await getWebPrime();
     } else {
       // Native 流程
-      final initRes = await initTapPay(
+      final initRes = await FlutterTapPaySdkPlatform.instance.initTapPay(
         appId: appId,
         appKey: appKey,
         isSandbox: isSandbox,
@@ -285,7 +285,7 @@ class FlutterTapPaySdk {
       if ([cardNumber, dueMonth, dueYear, cvv].any((e) => e == null || e.isEmpty)) {
         throw Exception('Missing card info for native platform');
       }
-      final primeRes = await getCardPrime(
+      final primeRes = await FlutterTapPaySdkPlatform.instance.getCardPrime(
         cardNumber: cardNumber!,
         dueMonth: dueMonth!,
         dueYear: dueYear!,
