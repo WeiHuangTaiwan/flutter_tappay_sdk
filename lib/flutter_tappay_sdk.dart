@@ -240,8 +240,12 @@ class FlutterTapPaySdk {
   }
 
   /// Call TPDirect.card.getPrime() in Web
-  static Future<String?> getWebPrime() {
-    return FlutterTapPaySdkPlatform.instance.getPrime();
+  static Future<String> getWebPrime() async {
+    final prime = await FlutterTapPaySdkPlatform.instance.getPrime();
+    if (prime == null) {
+      throw Exception('getWebPrime failed: prime is null');
+    }
+    return prime;
   }
 
   /// Call TPDirect.getDeviceId() in Web
