@@ -222,4 +222,28 @@ class FlutterTapPaySdk {
   Future<TapPaySdkCommonResult?> applePayResult({required bool result}) {
     return FlutterTapPaySdkPlatform.instance.applePayResult(result: result);
   }
+    /// Setup Web TapPay SDK (TPDirect.setupSDK)
+  ///
+  /// [serverType] is 'sandbox' or 'production'
+  static Future<void> setupWebSDK({
+    required int appId,
+    required String appKey,
+    required String serverType,
+  }) {
+    return FlutterTapPaySdkPlatform.instance.setupSDK(
+      appId: appId,
+      appKey: appKey,
+      serverType: serverType,
+    );
+  }
+
+  /// Call TPDirect.card.getPrime() in Web
+  static Future<String> getWebPrime() {
+    return FlutterTapPaySdkPlatform.instance.getPrime();
+  }
+
+  /// Call TPDirect.getDeviceId() in Web
+  static Future<String> getWebDeviceId() {
+    return FlutterTapPaySdkPlatform.instance.getDeviceId();
+  }
 }
