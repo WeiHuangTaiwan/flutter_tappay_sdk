@@ -88,6 +88,8 @@ class FlutterTapPaySdk {
     required String dueMonth,
     required String dueYear,
     required String cvv,
+    /// true for sandbox/testing, false for production
+    bool isSandbox = false,
   }) {
     return FlutterTapPaySdkPlatform.instance.getCardPrime(
       cardNumber: cardNumber,
