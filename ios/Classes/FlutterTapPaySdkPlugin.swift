@@ -61,10 +61,10 @@ public class FlutterTapPaySdkPlugin: NSObject, FlutterPlugin {
       let expiryMonth = args["mm"] as? String
       let expiryYear = args["yy"] as? String
       let cvv = args["cvv"] as? String
-      //Debug 用 
+      //Debug 用 --------------------------------------------------------------------------------------
       let isSandbox = args["isSandbox"] as? Bool ?? false
       NSLog("[iOS] getPrimeByCardInfo → cardNumber: \(cardNumber ?? ""), isSandbox: \(isSandbox)")
-      //Debug 用
+      //Debug 用 --------------------------------------------------------------------------------------
 
       //carNumber --> cardNumber
       createTokenByCardInfo(cardNumber: cardNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cvv: cvv) {
@@ -133,6 +133,10 @@ public class FlutterTapPaySdkPlugin: NSObject, FlutterPlugin {
     
     let serverType: TPDServerType = isSandbox == true ?
     TPDServerType.sandBox : TPDServerType.production
+
+    //Debug 用 -------------------------------------------------------------------------------------- 
+     print("[TapPay] initTapPay → serverType: \(serverType == .sandBox ? "Sandbox" : "Production"), appId: \(appId!)")
+    //Debug 用 --------------------------------------------------------------------------------------
     
     TPDSetup.setWithAppId(appId!, withAppKey: appKey!, with: serverType)
     
