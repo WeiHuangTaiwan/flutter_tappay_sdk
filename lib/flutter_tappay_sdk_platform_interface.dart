@@ -73,6 +73,7 @@ abstract class FlutterTapPaySdkPlatform extends PlatformInterface {
   /// [dueMonth] is the month of the card's expiration date
   /// [dueYear] is the year of the card's expiration date
   /// [cvv] is the card's CVV(Card Verification Value)
+  /// [isSandbox] indicate whether to use sandbox mode (default: false)
   ///
   /// return [TapPayPrime] with value [success] as [true] if success.
   /// return [TapPayPrime] with value [success] as [false] if fail.
@@ -86,6 +87,7 @@ abstract class FlutterTapPaySdkPlatform extends PlatformInterface {
     required String dueMonth,
     required String dueYear,
     required String cvv,
+    bool isSandbox = false,    // ← 新增
   });
 
   /// Initialize Google Pay
