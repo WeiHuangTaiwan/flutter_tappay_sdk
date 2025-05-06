@@ -130,6 +130,10 @@ public class FlutterTapPaySdkPlugin: NSObject, FlutterPlugin {
     TPDServerType.sandBox : TPDServerType.production
     
     TPDSetup.setWithAppId(appId!, withAppKey: appKey!, with: serverType)
+
+     // ➡️ 在這裡加一行，確認目前環境
+    print("▶️ [TapPay] serverType isSandbox =", TPDSetup.getServerType() == .sandBox)
+
     
     let result = TapPaySdkCommonResult(success: true, message: nil)
     onResult(result.toDictionary())
@@ -157,6 +161,9 @@ private func createTokenByCardInfo(cardNumber: String?, expiryMonth: String?, ex
   var yy = expiryYear!
   let cardNum = cardNumber!
 
+   // ➡️ 在這裡印出即將傳給 SDK 的所有欄位
+  print("▶️ [TapPay] createTokenByCardInfo → cardNumber:\(cardNum), mm:\(mm), yy:\(yy), cvv:\(cvv!)")
+
   // ✅ 這裡補上 Sandbox 修正
   if TPDSetup.getServerType() == .sandBox {
     let testCards = ["4242424242424242"] // 可擴充
@@ -175,6 +182,8 @@ private func createTokenByCardInfo(cardNumber: String?, expiryMonth: String?, ex
       onResult(CreateCardTokenByCardInfoResult(success: true, status: nil, message: nil, prime: prime).toDictionary())
     }
     .onFailureCallback { (status, message) in
+          // ➡️ 在這裡印出失敗的 status 與 message
+      print("❌ [TapPay] getPrime failed: status=\(status), message=\(message)")                    
       onResult(CreateCardTokenByCardInfoResult(success: false, status: status, message: message, prime: nil).toDictionary())
     }
     .createToken(withGeoLocation: "UNKNOWN")
