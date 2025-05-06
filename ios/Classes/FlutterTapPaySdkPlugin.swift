@@ -218,6 +218,11 @@ private func createTokenByCardInfo(cardNumber: String?, expiryMonth: String?, ex
       isEmailRequired: isEmailRequired,
       onApplePayCheck: callbackDelegate
     )
+//測試測試測試測試測試測試測試測試測試測試
+  let serverTypeString = TPDSetup.getServerType() == .sandBox ? "sandbox" : "production"
+  var dict = TapPaySdkCommonResult(success: true, message: nil).toDictionary()
+  dict["serverType"] = serverTypeString
+  onResult(dict)
   }
   
   private func requestApplePay(
