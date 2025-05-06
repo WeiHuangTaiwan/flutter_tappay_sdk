@@ -65,9 +65,10 @@ public class FlutterTapPaySdkPlugin: NSObject, FlutterPlugin {
       let isSandbox = args["isSandbox"] as? Bool ?? false
       print("[iOS] getPrimeByCardInfo → cardNumber: \(cardNumber ?? ""), isSandbox: \(isSandbox)")
       //Debug 用
-      
-      createTokenByCardInfo(cardNumber: carNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cvv: cvv) {
-        response in result(response)
+
+      //carNumber --> cardNumber
+      createTokenByCardInfo(cardNumber: cardNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cvv: cvv) {
+        response in result(response) 
       }
       
     case "initApplePay":
