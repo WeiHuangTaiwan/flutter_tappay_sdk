@@ -71,6 +71,8 @@ class MethodChannelFlutterTapPaySdk extends FlutterTapPaySdkPlatform {
     required String dueMonth,
     required String dueYear,
     required String cvv,
+    /// true→sandbox, false→production
+    bool isSandbox = false,
   }) async {
     final result = await methodChannel
         .invokeMethod<Map<Object?, Object?>>('getPrimeByCardInfo', {
@@ -78,6 +80,8 @@ class MethodChannelFlutterTapPaySdk extends FlutterTapPaySdkPlatform {
       'mm': dueMonth,
       'yy': dueYear,
       'cvv': cvv,
+      /// true→sandbox, false→production
+      'isSandbox': isSandbox,
     });
 
     if (result == null) {
