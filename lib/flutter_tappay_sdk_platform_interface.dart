@@ -86,6 +86,8 @@ abstract class FlutterTapPaySdkPlatform extends PlatformInterface {
     required String dueMonth,
     required String dueYear,
     required String cvv,
+    /// 新增 sandbox 標記：true 用測試環境，false 用正式環境
+    bool isSandbox = false,
   });
 
   /// Initialize Google Pay
