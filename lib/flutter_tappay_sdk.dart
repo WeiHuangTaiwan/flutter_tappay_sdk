@@ -282,8 +282,7 @@ class FlutterTapPaySdk {
         appKey: appKey,
         isSandbox: isSandbox,
       );
-//測試測試測試測試測試測試測試測試測試
-print('🛠 initTapPay response: $initRes');
+
       if (initRes?.success != true) {
         throw Exception('TapPay init failed: ${initRes?.message}');
       }
