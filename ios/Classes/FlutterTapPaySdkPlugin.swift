@@ -135,7 +135,8 @@ public class FlutterTapPaySdkPlugin: NSObject, FlutterPlugin {
     TPDServerType.sandBox : TPDServerType.production
 
     //Debug 用 -------------------------------------------------------------------------------------- 
-     print("[TapPay] initTapPay → serverType: \(serverType == .sandBox ? "Sandbox" : "Production"), appId: \(appId!)")
+     NSLog("[TapPay] initTapPay → serverType: %@, appId:%d",
+      serverType == .sandBox ? "Sandbox" : "Production", appId!)
     //Debug 用 --------------------------------------------------------------------------------------
     
     TPDSetup.setWithAppId(appId!, withAppKey: appKey!, with: serverType)
