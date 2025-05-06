@@ -147,38 +147,21 @@ public class FlutterTapPaySdkPlugin: NSObject, FlutterPlugin {
     return result.isCardNumberValid && result.isExpiryDateValid && result.isCCVValid
   }
   
-private func createTokenByCardInfo(cardNumber: String?, expiryMonth: String?, expiryYear: String?, cvv: String?, onResult: @escaping([String: Any?]) -> Void) {
-  if (cardNumber == nil || expiryMonth == nil || expiryYear == nil || cvv == nil) {
-    onResult(CreateCardTokenByCardInfoResult(success: false, status: nil, message: "Missing required parameters for \"getPrimeByCardInfo\" method.", prime: nil).toDictionary())
-    return
-  }
-
-  var mm = expiryMonth!
-  var yy = expiryYear!
-  let cardNum = cardNumber!
-
-  // ✅ 這裡補上 Sandbox 修正
-  if TPDSetup.getServerType() == .sandBox {
-    let testCards = ["4242424242424242"] // 可擴充
-    if testCards.contains(cardNum) {
-      let currentYear = Calendar.current.component(.year, from: Date()) % 100
-      let inputYear = Int(yy) ?? -1
-      if inputYear < currentYear {
-        yy = String(format: "%02d", currentYear + 5)
-        mm = "12"
+  private func createTokenByCardInfo(cardNumber: String?, expiryMonth: String?, expiryYear: String?, cvv: String?, onResult: @escaping([String: Any?]) -> Void) {
+    if (cardNumber == nil || expiryMonth == nil || expiryYear == nil || cvv == nil) {
+      onResult(CreateCardTokenByCardInfoResult(success: false, status: nil, message: "Missing required parameters for \"getPrimeByCardInfo\" method.", prime: nil).toDictionary())
+      return
+    }
+    
+    TPDCard.setWithCardNumber(cardNumber!, withDueMonth: expiryMonth!, withDueYear: expiryYear!, withCCV: cvv!)
+      .onSuccessCallback { (prime, cardInfo, cardIdentifier, merchantReferenceInfo) in
+        onResult(CreateCardTokenByCardInfoResult(success: true, status: nil, message: nil, prime: prime).toDictionary())
       }
-    }
+      .onFailureCallback { (status, message) in
+        onResult(CreateCardTokenByCardInfoResult(success: false, status: status, message: message, prime: nil).toDictionary())
+      }
+      .createToken(withGeoLocation: "UNKNOWN")
   }
-
-  TPDCard.setWithCardNumber(cardNum, withDueMonth: mm, withDueYear: yy, withCCV: cvv!)
-    .onSuccessCallback { (prime, cardInfo, cardIdentifier, merchantReferenceInfo) in
-      onResult(CreateCardTokenByCardInfoResult(success: true, status: nil, message: nil, prime: prime).toDictionary())
-    }
-    .onFailureCallback { (status, message) in                
-      onResult(CreateCardTokenByCardInfoResult(success: false, status: status, message: message, prime: nil).toDictionary())
-    }
-    .createToken(withGeoLocation: "UNKNOWN")
-}
   
   private func initApplePay(
     merchantId: String? = nil,
