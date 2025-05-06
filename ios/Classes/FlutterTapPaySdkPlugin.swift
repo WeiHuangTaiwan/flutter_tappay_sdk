@@ -57,13 +57,13 @@ public class FlutterTapPaySdkPlugin: NSObject, FlutterPlugin {
         return
       }
       
-      let carNumber = args["cardNumber"] as? String
+      let cardNumber = args["cardNumber"] as? String //carNumber --> cardNumber
       let expiryMonth = args["mm"] as? String
       let expiryYear = args["yy"] as? String
       let cvv = args["cvv"] as? String
       //Debug 用 
       let isSandbox = args["isSandbox"] as? Bool ?? false
-      print("[iOS] getPrimeByCardInfo → carNumber: \(cardNumber ?? ""), isSandbox: \(isSandbox)")
+      print("[iOS] getPrimeByCardInfo → cardNumber: \(cardNumber ?? ""), isSandbox: \(isSandbox)")
       //Debug 用
       
       createTokenByCardInfo(cardNumber: carNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cvv: cvv) {
